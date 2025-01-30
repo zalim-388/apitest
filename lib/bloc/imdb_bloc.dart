@@ -12,14 +12,12 @@ class ImdbBloc extends Bloc<ImdbEvent, ImdbState> {
 
   ImdbBloc() : super(ImdbInitial()) {
     on<fetchTopMovies>((evant, emit) async {
-
       emit(ImdbblocLoading());
 
-
-      try{
-        imdbmodel=await api.getimdb();
+      try {
+        imdbmodel = await api.getimdb();
         emit(ImdbblocLoadied());
-      } catch(e){
+      } catch (e) {
         emit(ImdbblocError());
       }
     });
