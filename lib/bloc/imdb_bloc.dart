@@ -15,6 +15,8 @@ class ImdbBloc extends Bloc<ImdbEvent, ImdbState> {
       emit(ImdbblocLoading());
 
       try {
+
+        
         imdbmodel = await api.getimdb();
         emit(ImdbblocLoadied());
       } catch (e) {

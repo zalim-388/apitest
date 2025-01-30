@@ -28,30 +28,31 @@ class _MoviesScreenState extends State<MoviesScreen> {
           } else if (state is ImdbblocError) {
             return Center(child: Text('Something went wrong!'));
           } else if (state is ImdbblocLoadied) {
-            // final movies = state.movies;
+            var data = BlocProvider.of<ImdbBloc>(context).imdbmodel;
 
-            // return ListView.builder(
-            //   itemCount: movies.length,
-            //   itemBuilder: (context, index) {
-            //     final movie = movies[index];
-            //     return Card(
-            //       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-            //       child: ListTile(
-            //         leading: Image.network(
-            //           movie['image'],
-            //           width: 50,
-            //           height: 50,
-            //           fit: BoxFit.cover,
-            //           errorBuilder: (context, error, stackTrace) =>
-            //               Icon(Icons.movie),
-            //         ),
-            //         title: Text(movie['title']),
-            //         subtitle: Text(
-            //             'Rating: ${movie['rating']} | Year: ${movie['year']}'),
-            //       ),
-            //     );
-            //   },
-            // );
+            return ListView.builder(
+              itemCount: data.genre!.length,
+              itemBuilder: (context, index) {
+                // final movie = state.movies[index];
+
+                return Card(
+                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                  child: ListTile(
+                    leading: Image.network(
+                      data.image,
+                      width: 50,
+                      height: 50,
+                      fit: BoxFit.cover,
+                      errorBuilder: (context, error, stackTrace) =>
+                          Icon(Icons.movie),
+                    ),
+                    title: Text(data.id.toString()),
+                    subtitle:
+                        Text('Rating: ${[data.rank]} | Year: ${data.year}'),
+                  ),
+                );
+              },
+            );
           }
           return Container();
         },
