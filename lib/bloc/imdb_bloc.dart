@@ -8,18 +8,17 @@ part 'Imdb_state.dart';
 
 class ImdbBloc extends Bloc<ImdbEvent, ImdbState> {
   ImdbApi api = ImdbApi();
-  late ImdbModel imdbmodel;
+  late List<ImdbModel> imdbMovies; // Change to a list
 
   ImdbBloc() : super(ImdbInitial()) {
-    on<fetchTopMovies>((evant, emit) async {
+    on<fetchTopMovies>((event, emit) async {
       emit(ImdbblocLoading());
 
       try {
-
-        
-        imdbmodel = await api.getimdb();
-        emit(ImdbblocLoadied());
+        imdbMovies = await api.getimdb(); // Fetch list of movies
+        emit(ImdbblocLoadied(imdbMovies)); // Pass list to state
       } catch (e) {
+        print(e);
         emit(ImdbblocError());
       }
     });

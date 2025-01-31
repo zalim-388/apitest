@@ -1,69 +1,51 @@
-// To parse this JSON data, do
-//
-//     final imdbModel = imdbModelFromJson(jsonString);
-
-import 'dart:convert';
-
-List<ImdbModel> imdbModelFromJson(String str) => List<ImdbModel>.from(json.decode(str).map((x) => ImdbModel.fromJson(x)));
-
-String imdbModelToJson(List<ImdbModel> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ImdbModel {
-    int rank;
-    String title;
-    String description;
-    String image;
-    String bigImage;
-    List<String> genre;
-    String thumbnail;
-    String rating;
-    String id;
-    int year;
-    String imdbid;
-    String imdbLink;
+    int? rank;
+    String? title;
+    String? description;
+    String? image;
+    String? bigImage;
+    List<String>? genre;
+    String? thumbnail;
+    String? rating;
+    String? id;
+    int? year;
+    String? imdbid;
+    String? imdbLink;
 
-    ImdbModel({
-        required this.rank,
-        required this.title,
-        required this.description,
-        required this.image,
-        required this.bigImage,
-        required this.genre,
-        required this.thumbnail,
-        required this.rating,
-        required this.id,
-        required this.year,
-        required this.imdbid,
-        required this.imdbLink,
-    });
+    ImdbModel({this.rank, this.title, this.description, this.image, this.bigImage, this.genre, this.thumbnail, this.rating, this.id, this.year, this.imdbid, this.imdbLink});
 
-    factory ImdbModel.fromJson(Map<String, dynamic> json) => ImdbModel(
-        rank: json["rank"],
-        title: json["title"],
-        description: json["description"],
-        image: json["image"],
-        bigImage: json["big_image"],
-        genre: List<String>.from(json["genre"].map((x) => x)),
-        thumbnail: json["thumbnail"],
-        rating: json["rating"],
-        id: json["id"],
-        year: json["year"],
-        imdbid: json["imdbid"],
-        imdbLink: json["imdb_link"],
-    );
+    ImdbModel.fromJson(Map<String, dynamic> json) {
+        rank = json["rank"];
+        title = json["title"];
+        description = json["description"];
+        image = json["image"];
+        bigImage = json["big_image"];
+        genre = json["genre"] == null ? null : List<String>.from(json["genre"]);
+        thumbnail = json["thumbnail"];
+        rating = json["rating"];
+        id = json["id"];
+        year = json["year"];
+        imdbid = json["imdbid"];
+        imdbLink = json["imdb_link"];
+    }
 
-    Map<String, dynamic> toJson() => {
-        "rank": rank,
-        "title": title,
-        "description": description,
-        "image": image,
-        "big_image": bigImage,
-        "genre": List<dynamic>.from(genre.map((x) => x)),
-        "thumbnail": thumbnail,
-        "rating": rating,
-        "id": id,
-        "year": year,
-        "imdbid": imdbid,
-        "imdb_link": imdbLink,
-    };
+    Map<String, dynamic> toJson() {
+        final Map<String, dynamic> _data = <String, dynamic>{};
+        _data["rank"] = rank;
+        _data["title"] = title;
+        _data["description"] = description;
+        _data["image"] = image;
+        _data["big_image"] = bigImage;
+        if(genre != null) {
+            _data["genre"] = genre;
+        }
+        _data["thumbnail"] = thumbnail;
+        _data["rating"] = rating;
+        _data["id"] = id;
+        _data["year"] = year;
+        _data["imdbid"] = imdbid;
+        _data["imdb_link"] = imdbLink;
+        return _data;
+    }
 }

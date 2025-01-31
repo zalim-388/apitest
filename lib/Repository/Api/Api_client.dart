@@ -52,7 +52,7 @@ class ApiClient {
           headers: {
             'X-RapidAPI-Key':
                 'ca62211e4cmshcd22b3f6295b989p18b2ccjsn35cbabc6e276',
-            'X-RapidAPI-Host': 'imdb236.p.rapidapi.com',
+            'X-RapidAPI-Host': 'imdb-top-100-movies.p.rapidapi.com',
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },

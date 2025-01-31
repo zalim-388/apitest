@@ -20,43 +20,43 @@ class _MoviesScreenState extends State<MoviesScreen> {
       appBar: AppBar(
         title: Text('IMDB Top 100 Movies'),
       ),
-      body: BlocBuilder<ImdbBloc, ImdbState>(
-        builder: (context, state) {
-          if (state is ImdbblocLoading) {
-            print('Loading');
-            return Center(child: CircularProgressIndicator());
-          } else if (state is ImdbblocError) {
-            return Center(child: Text('Something went wrong!'));
-          } else if (state is ImdbblocLoadied) {
-            var data = BlocProvider.of<ImdbBloc>(context).imdbmodel;
+      body: BlocBuilder<ImdbBloc, ImdbState>(builder: (context, state) {
+        if (state is ImdbblocLoading) {
+          print('Loading');
+          return Center(child: CircularProgressIndicator());
+        } else if (state is ImdbblocError) {
+          return Center(child: Text('Something went wrong!'));
+        } else if (state is ImdbblocLoadied) {
+          var data = BlocProvider.of<ImdbBloc>(context).imdbMovies;
 
-            return ListView.builder(
-              itemCount: data.genre!.length,
-              itemBuilder: (context, index) {
-                // final movie = state.movies[index];
-
-                return Card(
-                  margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                  child: ListTile(
-                    leading: Image.network(
-                      data.image,
-                      width: 50,
-                      height: 50,
-                      fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          Icon(Icons.movie),
-                    ),
-                    title: Text(data.id.toString()),
-                    subtitle:
-                        Text('Rating: ${[data.rank]} | Year: ${data.year}'),
+          return ListView.builder(
+            itemCount: data.length,
+            itemBuilder: (context, index) {
+              return Card(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                child: ListTile(
+                  title: Text(data.elementAt(index).title.toString()),
+                  leading:Image.network(
+                    data.elementAt(index).image.toString(),
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.cover,
                   ),
-                );
-              },
-            );
-          }
-          return Container();
-        },
-      ),
+                  //  Text(
+                  //   data.elementAt(index).rank.toString(),
+                  // ),
+                  subtitle: Text('imdb id: ${[
+                    data.elementAt(index).title.toString(),
+                  ]} | Link: ${[
+                    data.elementAt(index).description.toString(),
+                  ]}'),
+                ),
+              );
+            },
+          );
+        }
+        return Container();
+      }),
     );
   }
 }
